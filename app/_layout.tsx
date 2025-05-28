@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { Feather } from "@expo/vector-icons";
+import { Session } from "@supabase/supabase-js";
 import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Session } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
 import {
-  Appearance,
-  View,
-  Pressable,
-  ActivityIndicator,
+    ActivityIndicator,
+    Appearance,
+    Pressable,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Feather } from "@expo/vector-icons";
-import { createRealtimeClient } from '../helper/realtimeClient';
+import { supabase } from '../helper/supabaseClient'; // import supabase
 
 import { Colors } from "@/constants/Colors";
 

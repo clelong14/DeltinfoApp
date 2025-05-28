@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
+  FlatList,
+  Image,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
-  FlatList,
-  View,
+  StyleSheet,
   Text,
-  Image,
-  Pressable,
+  View,
 } from "react-native";
 
 import { Feather } from '@expo/vector-icons';
-import { createRealtimeClient } from '../helper/realtimeClient';
+import { supabase } from '../helper/supabaseClient'; // import supabase
 
 const lightTheme = {
   background: "#f5f7fa",
