@@ -25,7 +25,7 @@
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
-    "@supabase/supabase-js": "^2.39.5",
+    "@supabase/supabase-js": "^2.49.8",
     "cross-fetch": "^4.1.0",
     "expo": "~53.0.9",
     "expo-blur": "~14.1.4",
@@ -59,6 +59,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
+    "dotenv": "^16.5.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
     "rimraf": "^6.0.1",
