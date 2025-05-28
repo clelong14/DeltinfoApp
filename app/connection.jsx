@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
-import supabase from '../helper/supabaseClient';
+import { createRealtimeClient } from '../helper/realtimeClient';
 
 function Connection() {
   const [email, setEmail] = useState('');

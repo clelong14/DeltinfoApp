@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, StyleSheet, TextInput, Alert } from 'react-native';
-import supabase from '../helper/supabaseClient';
+import { createRealtimeClient } from '../helper/realtimeClient';
 import { useRouter } from 'expo-router';
 
 export default function Profil() {
