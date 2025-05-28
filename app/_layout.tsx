@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Session } from "@supabase/supabase-js";
+import supabase from '../helper/supabaseClient';
 import {
   Appearance,
   View,
