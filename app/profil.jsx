@@ -1,7 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, Pressable, StyleSheet, TextInput, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { supabase } from '../helper/supabaseClient'; // import supabase
 
 export default function Profil() {
   const [session, setSession] = useState(null);
