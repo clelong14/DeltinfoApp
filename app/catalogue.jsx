@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 import { Feather } from '@expo/vector-icons';
-import supabase from "../helper/supabaseClient"; // vérifie le chemin
+import { createRealtimeClient } from '../helper/realtimeClient';
 
 const lightTheme = {
   background: "#f5f7fa",
