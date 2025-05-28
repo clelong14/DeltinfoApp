@@ -1,8 +1,8 @@
-import { Feather } from '@expo/vector-icons';
-import { Link } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { supabase } from '../helper/supabaseClient'; // import supabase
+import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
+import { Feather } from '@expo/vector-icons';
+import { createClient } from '../helper/supabaseClient';
 
 function Connection() {
   const [email, setEmail] = useState('');
