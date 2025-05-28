@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
 import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';  // pour les icônes lune/soleil
+import { createRealtimeClient } from '../helper/realtimeClient';
 
 import blueBackgroundImg from "@/assets/images/blue-background.png";
 
