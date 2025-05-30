@@ -5,6 +5,8 @@ import {
 } from 'react-native';
 import { Link } from 'expo-router';
 import { Feather } from '@expo/vector-icons';  // pour icônes lune/soleil
+import 'react-native-url-polyfill/auto';
+import { supabase } from '../helper/supabaseClient';
 
 export default function ContactScreen() {
   const [darkMode, setDarkMode] = useState(false);

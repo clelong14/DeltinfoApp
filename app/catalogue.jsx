@@ -12,7 +12,8 @@ import {
 } from "react-native";
 
 import { Feather } from '@expo/vector-icons';
-import { createClient } from '../helper/supabaseClient';
+import 'react-native-url-polyfill/auto';
+import { supabase } from '../helper/supabaseClient';
 
 const lightTheme = {
   background: "#f5f7fa",

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
 import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';  // pour les icônes lune/soleil
-import { createClient } from '../helper/supabaseClient';
+import 'react-native-url-polyfill/auto';
+import { supabase } from '../helper/supabaseClient';
 
 import blueBackgroundImg from "@/assets/images/blue-background.png";
 
