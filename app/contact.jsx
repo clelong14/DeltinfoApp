@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  StyleSheet, SafeAreaView, View, Text, Pressable
-} from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 import { Feather } from '@expo/vector-icons';  // pour icônes lune/soleil
 

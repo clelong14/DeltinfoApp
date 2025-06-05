@@ -1,16 +1,7 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
-  Pressable,
-  Alert,
-} from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, Pressable, Alert, } from "react-native";
 import { supabase } from "../../lib/supabaseClient";
 
 export default function ArticleDetails() {
