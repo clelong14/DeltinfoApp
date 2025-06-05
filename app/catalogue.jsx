@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Platform, SafeAreaView, ScrollView, FlatList, View, Text, Image, Pressable, } from "react-native";
-
+import { Link } from "expo-router";
 import { Feather } from '@expo/vector-icons';
 
 import 'react-native-url-polyfill/auto';
@@ -32,11 +32,41 @@ export default function MenuScreen() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  // Utilisation de l'API Supabase pour récupérer les articles
+//   useEffect(() => {
+//   const fetchArticles = async () => {
+//     try {
+//       const response = await fetch('http://192.168.30.230:8081/articles');
+//       const data = await response.json();
+
+//       if (!Array.isArray(data)) {
+//         throw new Error("Format de réponse invalide");
+//       }
+
+//       setArticles(data);
+//     } catch (error) {
+//       console.error("Erreur lors de la récupération des articles :", error);
+//       setArticles([]);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   fetchArticles();
+// }, []);
+
+// Utilisation de Supabase hébérger en ligne pour récupérer les articles
+useEffect(() => {
   const fetchArticles = async () => {
     try {
-      const response = await fetch('http://192.168.30.230:8081/articles');
-      const data = await response.json();
+      const { data, error } = await supabase
+        .from('articles')
+        .select('*')
+        .order('id', { ascending: true }); // optionnel : ordonner les articles
+
+      if (error) {
+        throw error;
+      }
 
       if (!Array.isArray(data)) {
         throw new Error("Format de réponse invalide");
@@ -44,7 +74,7 @@ export default function MenuScreen() {
 
       setArticles(data);
     } catch (error) {
-      console.error("Erreur lors de la récupération des articles :", error);
+      console.error("Erreur lors de la récupération des articles :", error.message);
       setArticles([]);
     } finally {
       setLoading(false);
@@ -53,6 +83,7 @@ export default function MenuScreen() {
 
   fetchArticles();
 }, []);
+
 
   const Container = Platform.OS === "web" ? ScrollView : SafeAreaView;
   const separatorComp = <View style={styles.separator} />;
@@ -89,18 +120,23 @@ export default function MenuScreen() {
           ItemSeparatorComponent={() => separatorComp}
           ListFooterComponent={footerComp}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+          <Link href={`/article/${item.id}`} asChild>
+            <Pressable style={styles.card}>
               <View style={styles.textContainer}>
                 <Text style={styles.title}>{item.titre}</Text>
-                <Text style={styles.description}>{item.description}</Text>
+                <Text style={styles.description} numberOfLines={2}>
+                  {item.description}
+                </Text>
               </View>
               <Image
                 source={{ uri: item.image_url }}
                 style={styles.image}
                 resizeMode="cover"
               />
-            </View>
-          )}
+            </Pressable>
+          </Link>
+        )}
+
           ListEmptyComponent={
             <Text style={styles.emptyText}>Pas d'article.</Text>
           }

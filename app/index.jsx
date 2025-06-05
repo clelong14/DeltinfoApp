@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
 import { ImageBackground, Pressable, StyleSheet, Text, View, FlatList, Image, } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { ThemeProvider } from "../components/ThemeContext";
 
 import 'react-native-url-polyfill/auto';
 import { supabase } from "../lib/supabaseClient";
@@ -10,7 +11,7 @@ import blueBackgroundImg from '../assets/images/blue-background.png';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [articles, setArticles] = useState([]); // ✅ Ajouté ici
+  const [articles, setArticles] = useState([]);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);

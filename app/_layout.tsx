@@ -6,6 +6,7 @@ import { Session } from "@supabase/supabase-js";
 import { Appearance, View, Pressable, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { ThemeProvider } from "../components/ThemeContext";
 
 import 'react-native-url-polyfill/auto';
 import { supabase } from "../lib/supabaseClient";
@@ -82,6 +83,7 @@ export default function RootLayout() {
 
 
   return (
+    <ThemeProvider>
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <Stack
         screenOptions={{
@@ -135,9 +137,15 @@ export default function RootLayout() {
             title: "Contact Us",
           }}
         />
+        <Stack.Screen
+          name="article/[id]"
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen name="+not-found" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style={darkMode ? "light" : "dark"} />
     </SafeAreaView>
+    </ThemeProvider>
   );
 }
