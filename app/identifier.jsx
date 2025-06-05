@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
-import { Feather } from '@expo/vector-icons'; // import icônes lune/soleil
 
 import 'react-native-url-polyfill/auto';
 import { supabase } from "../lib/supabaseClient";
@@ -39,14 +38,6 @@ function Identifier() {
 
   return (
     <View style={[styles.container, darkMode ? styles.darkBackground : styles.lightBackground]}>
-      {/* Bouton toggle thème */}
-      <Pressable onPress={toggleTheme} style={styles.themeToggle}>
-        {darkMode ? (
-          <Feather name="sun" size={24} color="#FFC107" />
-        ) : (
-          <Feather name="moon" size={24} color="#555" />
-        )}
-      </Pressable>
 
       <Text style={[styles.title, darkMode ? styles.textLight : styles.textDark]}>S'identifier</Text>
       {message !== "" && <Text style={styles.message}>{message}</Text>}

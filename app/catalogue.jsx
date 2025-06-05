@@ -1,146 +1,75 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Platform, SafeAreaView, ScrollView, FlatList, View, Text, Image, Pressable, } from "react-native";
+import { StyleSheet, Platform, SafeAreaView, ScrollView, FlatList, View, Text, Image, Pressable, Appearance } from "react-native";
 import { Link } from "expo-router";
-import { Feather } from '@expo/vector-icons';
 
 import 'react-native-url-polyfill/auto';
 import { supabase } from "../lib/supabaseClient";
-
-const lightTheme = {
-  background: "#f5f7fa",
-  text: "#003366",
-  cardBackground: "white",
-  descriptionText: "#444",
-  buttonBackground: "#003366",
-  buttonText: "white",
-};
-
-const darkTheme = {
-  background: "#121212",
-  text: "#a1c6e7",
-  cardBackground: "#1e1e1e",
-  descriptionText: "#ccc",
-  buttonBackground: "#4a90e2",
-  buttonText: "black",
-};
+import { Colors } from "@/constants/Colors";
 
 export default function MenuScreen() {
-  const [isDark, setIsDark] = useState(false);
-  const theme = isDark ? darkTheme : lightTheme;
+  const [isDark, setIsDark] = useState(Appearance.getColorScheme() === "dark");
+
+  // Thème dynamique global
+  const theme = isDark ? Colors.dark : Colors.light;
   const styles = createStyles(theme);
 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Utilisation de l'API Supabase pour récupérer les articles
-//   useEffect(() => {
-//   const fetchArticles = async () => {
-//     try {
-//       const response = await fetch('http://192.168.30.230:8081/articles');
-//       const data = await response.json();
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("articles")
+          .select("*")
+          .order("id", { ascending: true });
 
-//       if (!Array.isArray(data)) {
-//         throw new Error("Format de réponse invalide");
-//       }
+        if (error) throw error;
+        if (!Array.isArray(data)) throw new Error("Format de réponse invalide");
 
-//       setArticles(data);
-//     } catch (error) {
-//       console.error("Erreur lors de la récupération des articles :", error);
-//       setArticles([]);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   fetchArticles();
-// }, []);
-
-// Utilisation de Supabase hébérger en ligne pour récupérer les articles
-useEffect(() => {
-  const fetchArticles = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('articles')
-        .select('*')
-        .order('id', { ascending: true }); // optionnel : ordonner les articles
-
-      if (error) {
-        throw error;
+        setArticles(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des articles :", error.message);
+        setArticles([]);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      if (!Array.isArray(data)) {
-        throw new Error("Format de réponse invalide");
-      }
-
-      setArticles(data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des articles :", error.message);
-      setArticles([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchArticles();
-}, []);
-
+    fetchArticles();
+  }, []);
 
   const Container = Platform.OS === "web" ? ScrollView : SafeAreaView;
-  const separatorComp = <View style={styles.separator} />;
-  const footerComp = <Text style={styles.footerComp}>Fin du catalogue</Text>;
-
-  if (loading) {
-    return (
-      <View style={[styles.wrapper, styles.container]}>
-        <Text style={styles.emptyText}>Chargement du catalogue...</Text>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.wrapper}>
-      <Pressable
-        style={styles.toggleButton}
-        onPress={() => setIsDark((prev) => !prev)}
-        accessibilityLabel="Toggle dark/light mode"
-      >
-        {isDark ? (
-          <Feather name="sun" size={24} color="#FFC107" />
-        ) : (
-          <Feather name="moon" size={24} color="#555" />
-        )}
-      </Pressable>
-
       <Container style={styles.container}>
-        <FlatList
-          data={Array.isArray(articles) ? articles : []}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.contentContainerStyle}
-          ItemSeparatorComponent={() => separatorComp}
-          ListFooterComponent={footerComp}
-          renderItem={({ item }) => (
-          <Link href={`/article/${item.id}`} asChild>
-            <Pressable style={styles.card}>
-              <View style={styles.textContainer}>
-                <Text style={styles.title}>{item.titre}</Text>
-                <Text style={styles.description} numberOfLines={2}>
-                  {item.description}
-                </Text>
-              </View>
-              <Image
-                source={{ uri: item.image_url }}
-                style={styles.image}
-                resizeMode="cover"
-              />
-            </Pressable>
-          </Link>
+        {loading ? (
+          <Text style={styles.emptyText}>Chargement du catalogue...</Text>
+        ) : (
+          <FlatList
+            data={articles}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            ListFooterComponent={<Text style={styles.footerComp}>Fin du catalogue</Text>}
+            renderItem={({ item }) => (
+              <Link href={`/article/${item.id}`} asChild>
+                <Pressable style={styles.card}>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.title}>{item.titre}</Text>
+                    <Text style={styles.description} numberOfLines={2}>
+                      {item.description}
+                    </Text>
+                  </View>
+                  <Image source={{ uri: item.image_url }} style={styles.image} resizeMode="cover" />
+                </Pressable>
+              </Link>
+            )}
+            ListEmptyComponent={<Text style={styles.emptyText}>Pas d'article.</Text>}
+          />
         )}
-
-          ListEmptyComponent={
-            <Text style={styles.emptyText}>Pas d'article.</Text>
-          }
-        />
       </Container>
     </View>
   );
@@ -206,7 +135,6 @@ function createStyles(theme) {
       height: 100,
       borderRadius: 12,
       backgroundColor: "#eee",
-      resizeMode: "cover",
     },
     emptyText: {
       textAlign: "center",

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, SafeAreaView, View, Text, Pressable } from 'react-native';
 import { Link } from 'expo-router';
-import { Feather } from '@expo/vector-icons';  // pour icônes lune/soleil
 
 export default function ContactScreen() {
   const [darkMode, setDarkMode] = useState(false);
@@ -11,16 +10,6 @@ export default function ContactScreen() {
 
   return (
     <SafeAreaView style={[styles.container, darkMode && styles.containerDark]}>
-
-      {/* Bouton toggle thème en haut à droite */}
-      <Pressable onPress={toggleTheme} style={styles.themeToggle}>
-        {darkMode ? (
-          <Feather name="sun" size={24} color="#FFC107" />
-        ) : (
-          <Feather name="moon" size={24} color="#555" />
-        )}
-      </Pressable>
-
       <View style={[styles.imgContainer, darkMode && styles.imgContainerDark]}>
         <Ionicons name="people-circle-outline" size={200} color={darkMode ? "#f6f8fa" : "#003366"} />
       </View>
